@@ -9,6 +9,14 @@ from bed import (
 from query import Table
 from bed import BedLine, BedLine2
 
+#def add(line: str) -> lst:
+#    """ Append line from input file to list.
+#    >>> add('chr1 20100  20101 foo')
+#    [BedLine(chrom='chr1', chrom_start=20100, chrom_end=20101, name='foo')]
+#    """
+#    lst.append(parse_line(line))
+# hvordan teste når modificere variablen lst?
+
 def main() -> None:
     """Run the program."""
     # Setting up the option parsing using the argparse module
