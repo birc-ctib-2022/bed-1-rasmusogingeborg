@@ -20,25 +20,6 @@ def default(input):
         new_line = '    '.join(elements)
         print(new_line)
 
-def convert_from_files(inp, outp='<stdout>'):
-    """
-    >>> convert_from_files(open('data/test_input.bed', 'r'))
-    chr1    20100    20101    foo
-    chr3    0    1    bar
-    >>> convert_from_files(open('data/test_input.bed', 'r'), open('data/test_output.bed', 'w'))
-    open(data/test_output.bed, 'w') # Virker ikke, men funktionen returnerer jo
-    # også None. 
-    """
-    if outp == '<stdout>':
-        for line in inp.readlines(): # f.readlines is a list of strings.
-            elements = line.split()
-            new_line = '    '.join(elements)
-            print(new_line)
-    else: 
-        for line in inp.readlines():
-            elements = line.split()
-            new_line = '    '.join(elements)
-            print(new_line, file=outp)
 
 def main() -> None:
     """Run the program.    
