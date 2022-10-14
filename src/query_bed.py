@@ -7,7 +7,6 @@ from bed import (
     parse_line, parse_line2, print_line
 )
 from query import Table
-# Necessary to import Bedline from Bed?
 from bed import BedLine, BedLine2
 
 def main() -> None:
@@ -55,8 +54,9 @@ def main() -> None:
         # Print BedLine1 to output file, if chrom, chrom_start and 
         # chrom_end are identical. 
         for parsed_input_line in lst:
-            if parsed_input_line.chrom == parsed_query_line.chrom and parsed_input_line.chrom_start == parsed_query_line.chrom_start and parsed_input_line.chrom_end == parsed_query_line.chrom_end:
+            if parsed_input_line.chrom == parsed_query_line.chrom and parsed_input_line.chrom_start in [i for i in range(parsed_query_line.chrom_start, parsed_query_line.chrom_end+1)] and parsed_input_line.chrom_end in [i for i in range(parsed_query_line.chrom_start, parsed_query_line.chrom_end+1)]:
                 print_line(parsed_input_line, f=output)
 
 if __name__ == '__main__':
     main()
+

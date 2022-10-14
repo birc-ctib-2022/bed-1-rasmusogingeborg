@@ -11,9 +11,6 @@ from bed import (
 
 def default(input):
     """Read lines from input, and prints tab-separated lines to stdout.
-    >>> default(open('data/test_input.bed')) 
-    chr1    20100    20101    foo
-    chr3    0    1    bar
     """ 
     for line in input.readlines():
         elements = line.split()

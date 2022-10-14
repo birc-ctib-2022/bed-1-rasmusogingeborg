@@ -47,7 +47,8 @@ def parse_line2(line: str) -> BedLine2:
     """
     chrom, start, end = line.split()
     bed_line = BedLine2(chrom, int(start), int(end))
-    assert bed_line.chrom_start + 1 == bed_line.chrom_end
+    # assert bed_line.chrom_start + 1 == bed_line.chrom_end
+    # Antagelsen, at nucleotid sekvenserne har længden 1 gælder kun input-filen, ikke query-filen. 
     return bed_line
 
 def print_line(line: BedLine, f: TextIO) -> None:
