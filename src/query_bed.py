@@ -33,17 +33,10 @@ def main() -> None:
 
     # Parse options and put them in the table args
     args = argparser.parse_args()
-
-    # Open input- and query files. Both are mandatory.
-    input = open(args.bed.name, 'r') # could e.g., be 'data/input2.bed'
-    query = open(args.query.name, 'r') # could e.g., be 'data/query2.txt'
-         
-    # Examine whether output file passed as argument or not. Open if yes.
-    if args.outfile.name != '<stdout>':
-        output = open(args.outfile.name, 'w') # could e.g., be 
-        #'data/output2.bed'. 
-    else: 
-        output = sys.stdout
+ 
+    input = args.bed # could e.g., be 'data/input2.bed'
+    query = args.query # could e.g., be 'data/query2.txt'
+    output = args.outfile
 
     # Initiate list to store BedLines from input-file in. 
     lst = []

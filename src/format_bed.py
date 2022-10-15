@@ -9,16 +9,6 @@ from bed import (
 )
 
 
-def default(input):
-    """Read lines from input, and prints tab-separated lines to stdout.
-    #>>> default(open('data/test_input.bed')) 
-    #chr1    20100    20101    foo
-    #chr3    0    1    bar
-    # virker ikke
-    """ 
-    for line in input.readlines():
-        print(print(to_tab_separated(line)))
-
 def to_tab_separated(line: str) -> str:
     """ Convert a space-separated line to a tab-separated line.
     >>> to_tab_separated('chr1 20100  20101 foo')
@@ -26,7 +16,6 @@ def to_tab_separated(line: str) -> str:
     """
     elements = line.split()
     return '    '.join(elements)
-
 
 
 def main() -> None:
@@ -52,20 +41,10 @@ def main() -> None:
     args = argparser.parse_args()
 
 
-    if args.infile.name != '<stdin>' and args.outfile.name != '<stdout>':
-        input = open(args.infile.name, 'r')
-        output = open(args.outfile.name, 'w')
-        for line in input.readlines(): # f.readlines is a list of strings.
-            print(to_tab_separated(line), file=output)
-        return
-
-    if args.infile.name != '<stdin>': # and args.outfile.name == <stdout>. 
-        input = open(args.infile.name, 'r')
-        for line in input.readlines():
-            print(to_tab_separated(line))
-        return
-
-    default(sys.stdin)
+    input = args.infile 
+    output = args.outfile
+    for line in input.readlines(): 
+        print(to_tab_separated(line), file=output)
     return
 
 
