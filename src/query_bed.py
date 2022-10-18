@@ -9,13 +9,6 @@ from bed import (
 from query import Table
 from bed import BedLine, BedLine2
 
-#def add(line: str) -> lst:
-#    """ Append line from input file to list.
-#    >>> add('chr1 20100  20101 foo')
-#    [BedLine(chrom='chr1', chrom_start=20100, chrom_end=20101, name='foo')]
-#    """
-#    lst.append(parse_line(line))
-# hvordan teste når modificere variablen lst?
 
 def main() -> None:
     """Run the program."""
@@ -55,7 +48,17 @@ def main() -> None:
         # Print BedLine1 to output file, if chrom, chrom_start and 
         # chrom_end are identical. 
         for parsed_input_line in lst:
-            if parsed_input_line.chrom == parsed_query_line.chrom and parsed_input_line.chrom_start in [i for i in range(parsed_query_line.chrom_start, parsed_query_line.chrom_end+1)] and parsed_input_line.chrom_end in [i for i in range(parsed_query_line.chrom_start, parsed_query_line.chrom_end+1)]:
+            if parsed_input_line.chrom == parsed_query_line.chrom and \
+                parsed_input_line.chrom_start in [i for i in \
+                    range(parsed_query_line.chrom_start, parsed_query_line.chrom_end)]:
+                # if more than single nucleotides are given in the input
+                # file, the following boolean expression must also 
+                # evaluate to True - otherwise the genomic region given
+                # in the input is not contained in the genomic region 
+                # given in the query for which reason it should not be
+                # included in the output. 
+                # parsed_input_line.chrom_end in [i for i in range(parsed_query_line.chrom_start+1,
+                #  parsed_query_line.chrom_end+1)]:
                 print_line(parsed_input_line, f=output)
 
 if __name__ == '__main__':

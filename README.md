@@ -65,9 +65,17 @@ When you have implemented the tool, answer the questions below, commit it to Git
 ## Questions
 
 How does your method for extracting features work?
+The lines in the input file are converted to bedlines, so that the position of the single nucleotides in the genome can be accessed by bedline.chrom_start and the chromosomes of the single nucleotides can be accessed by bedline.chrom. 
+All the bedlines are stored in a list. 
+The lines in the query file (e.g., large.bed) are converted to bedlines one at a time (query-bedline) and compared to all bedlines in the list (input-bedlines).
+If bedline.chrom of an input-bedline match bedline.chrom of a query-bedline, and bedline.chrom_start of the input-bedline is contained in the genomic range given by the query-bedline, the input-bedline is printed to the output. 
 
 What is the complexity of the algorithm, as a function of the size of the two input files? When you answer this, you need to know that you can get the list of chromosomse from a `query.Table` in constant time, but it does, of course, take longer to run through all the lines in it.
+Assuming the size (number of lines) of the input file is n and the size of the query file is m, the running time is O(nm).
+For each line in the query file, we investigate all of the lines in the input file.
 
 Did you, at any point, exploit that our features are on single nucleotides and not larger regions?
+Yes. We only tested that the chrom_start of the single nucleotides are in  [range(chrom_start, chrom_end)] of the genomic region, not that the chrom_end of the single nucleotides are in the range(chrom_start+1, chrom_end+1), because we assumed that chrom_start+1=chrom_end of the single nucleotide. 
 
 If you did, what would it take to handle general regions?
+To handle genomic regions, we would have to ensure that chrom_end of the region from the input file is in the range(chrom_start+1, chrom_end+1) of the genomic region given by a query-bedline. 
