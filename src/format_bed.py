@@ -9,12 +9,27 @@ from bed import (
 )
 
 
+def to_tab_separated(line: str) -> str:
+    """ Convert a space-separated line to a tab-separated line.
+    >>> to_tab_separated('chr1 20100  20101 foo')
+    'chr1    20100    20101    foo'
+    """
+    elements = line.split()
+    return '    '.join(elements)
+
+
 def main() -> None:
-    """Run the program."""
-    # Setting up the option parsing using the argparse module
+    """Run the program.    
+    """
+    # Create ArgumentParser-object using the argparse module. The 
+    # ArgumentParser is used to store and parse the options given to 
+    # the program through the command-line. 
     argparser = argparse.ArgumentParser(description="Cleans up a BED file")
     # 'infile' is either provided as an input file name or stdin
-    argparser.add_argument('infile',
+    # add_argument() used to tell the ArgumentParser, which options it can 
+    # expect and which objects it should create when it receives a given 
+    # option.
+    argparser.add_argument('infile',                     # The name of the option passed to the program.
                            nargs='?',                    # 0 or 1 arguments
                            type=argparse.FileType('r'),  # file for reading
                            default=sys.stdin)
@@ -23,12 +38,14 @@ def main() -> None:
                            nargs='?',                    # 0 or 1 arguments
                            type=argparse.FileType('w'),  # file for writing
                            default=sys.stdout)
-
-    # Parse options and put them in the table args
     args = argparser.parse_args()
 
-    # With all the options handled, we just need to do the real work
-    # FIXME: put your code here
+
+    input = args.infile 
+    output = args.outfile
+    for line in input.readlines(): 
+        print(to_tab_separated(line), file=output)
+    return
 
 
 if __name__ == '__main__':

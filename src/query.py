@@ -35,3 +35,14 @@ class Table:
     def get_chrom(self, chrom: str) -> list[BedLine]:
         """Get all the lines that sits on chrom"""
         return self.tbl[chrom]
+    
+    def get_table(self): 
+        """Get the table to see what it looks like"""
+        return self.tbl
+# Example of table:
+# {'chr1': [BedLine(chrom='chr1', chrom_start=20100, chrom_end=20101, 
+# name='foo'), BedLine(chrom='chr1', chrom_start=600, chrom_end=601, 
+# name='baz')], 'chr3': [BedLine(chrom='chr3', chrom_start=0, 
+# chrom_end=1, name='bar')], 'chr2': [BedLine(chrom='chr2', chrom_start
+# =200, chrom_end=201, name='qux'), BedLine(chrom='chr2', chrom_start=
+# 199, chrom_end=200, name='qax')]})

@@ -4,9 +4,10 @@ import argparse  # we use this module for option parsing. See main for details.
 
 import sys
 from bed import (
-    parse_line, print_line
+    parse_line, parse_line2, print_line
 )
 from query import Table
+from bed import BedLine, BedLine2
 
 
 def main() -> None:
@@ -25,10 +26,41 @@ def main() -> None:
 
     # Parse options and put them in the table args
     args = argparser.parse_args()
+ 
+    input = args.bed # could e.g., be 'data/input2.bed'
+    query = args.query # could e.g., be 'data/query2.txt'
+    output = args.outfile
 
-    # With all the options handled, we just need to do the real work
-    # FIXME: put your code here
+    # Initiate list to store BedLines from input-file in. 
+    lst = []
 
+    # Read strings in input file and convert to BedLines (4 columns). 
+    # Add BedLines to table.
+    for line in input.readlines():
+        parsed_input_line = parse_line(line) # Returns e.g., BedLine(
+        # chrom='chr1', chrom_start=20100, chrom_end=20101, name='foo')
+        lst.append(parsed_input_line)
+
+    # Read strings in query file and convert to BedLines (3 columns).
+    for line in query.readlines():
+        parsed_query_line = parse_line2(line)
+        # Compare BedLine2 from query with each BedLine1 in list. 
+        # Print BedLine1 to output file, if chrom, chrom_start and 
+        # chrom_end are identical. 
+        for parsed_input_line in lst:
+            if parsed_input_line.chrom == parsed_query_line.chrom and \
+                parsed_input_line.chrom_start in [i for i in \
+                    range(parsed_query_line.chrom_start, parsed_query_line.chrom_end)]:
+                # if more than single nucleotides are given in the input
+                # file, the following boolean expression must also 
+                # evaluate to True - otherwise the genomic region given
+                # in the input is not contained in the genomic region 
+                # given in the query for which reason it should not be
+                # included in the output. 
+                # parsed_input_line.chrom_end in [i for i in range(parsed_query_line.chrom_start+1,
+                #  parsed_query_line.chrom_end+1)]:
+                print_line(parsed_input_line, f=output)
 
 if __name__ == '__main__':
     main()
+
